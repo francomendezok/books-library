@@ -1,9 +1,10 @@
 body {
     display: grid;
-    grid-template-rows: 1fr 10fr 1fr;
+    grid-template-rows: 1fr 10fr 1.5fr;
     grid-auto-flow: row;
     width: 100%;
     height: 100vh;
+    overflow: hidden;
 }
 
 header {
@@ -20,7 +21,6 @@ header {
 }
 
 header p {
-    border: 3px solid white;
     width: 65%;
     height: 50%;
     display: flex;
@@ -30,7 +30,6 @@ header p {
 }
 
 .buttons {
-    border: 3px solid white;
     width: 33%;
     height: 50%;
     display: flex;
@@ -55,7 +54,6 @@ main {
 }
 
 .quote-and-button {
-    border: 5px solid black;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,13 +65,25 @@ main {
 #add-book {
     background-color: black;
     color: white;
-    padding: 1%;
     border-radius: 20px;
     width: 15%;
     height: 20%;
     font-size: 120%;
     font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
 }
+
+#naval {
+    font-style: italic;
+}
+
+button:hover {
+    transform: scale(1.05);
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
 
 footer {
     background-color: #164e63;
@@ -82,9 +92,31 @@ footer {
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
+#follow-p {
+    font-size: 250%;
+    padding: 1%;
+}
+
+
+.social-media {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.icon {
+    font-size: 150%;
+    padding: 1%;
+}
+
 
 a {
     color: white;
@@ -95,7 +127,34 @@ a {
 
 #quote {
     display: block;
-    margin: 5%;
+    margin: 0;
+    padding: 0;
+}
+
+.github *:hover {
+    fill: black;
+}
+
+.twitter *:hover {
+    fill: #1D9BF0;
+}
+
+.linkedin *:hover {
+    fill: #0A66C2;
+}
+
+.instagram *:hover {
+    fill: #833AB4;
+}
+
+
+
+#open-tab {
+    display: none;
+    border: 3px solid red;
+    width: 15%;
+    height: 50%;
+    margin: auto;
 }
 
 

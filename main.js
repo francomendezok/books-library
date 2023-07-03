@@ -5,7 +5,7 @@ let quotes = [
     "The overeducated are worse off than the undereducated, having traded common sense for the illusion of knowledge.",
     "If the primary purpose of school was education, the Internet should obsolete it. But school is mainly about credentialing.",
     "Teaching is more a way for the teacher to learn than for the student to learn.",
-    "The skills you really want can’t be taught, but they can be learned.",
+    "The skills you really want can't be taught, but they can be learned.",
     "Free education is abundant, all over the Internet. It's the desire to learn that's scarce.",
     "It's not about 'educated' v 'un-educated.' It's about 'likes to read' and 'doesn't like to read.'",
     "The Internet will obsolete the industrial education system, just like it's obsoleting every other physical purveyor of information goods.",
@@ -19,6 +19,12 @@ let quotes = [
     "Reading a book isn't a race - the better the book, the slower it should be absorbed."
 ]
 
+const quoteText = document.getElementById("quote");
+const naval =document.getElementById("naval");
+const addBook = document.getElementById("add-book");
+const openTab = document.getElementById("open-tab");
+const quotesLength = quotes.length;
+
 function Book() {
   // the constructor...
 }
@@ -27,6 +33,17 @@ function addBookToLibrary() {
   // do stuff here
 }
 
-function randomQuote () {
-
+function randomIndex () {
+  const randomNumber = Math.floor(Math.random() * quotesLength);
+  return randomNumber
 }
+
+quoteText.innerHTML = '"' + quotes[randomIndex()] + '"';
+
+addBook.addEventListener("click", function () {
+  openTab.style.display = "flex";
+  openTab.style.alignSelf = "center";
+})
+
+
+
