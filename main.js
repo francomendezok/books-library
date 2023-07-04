@@ -27,21 +27,23 @@ const title = document.getElementById("title");
 const author = document.getElementById("author");
 const pages = document.getElementById("pages");
 const read = document.getElementById("read");
+// Need to select all the radio read inputs (2), not just one. If not, the value will always be "Yes" //
 const submit = document.getElementById("submit");
 const grid = document.getElementById("grid");
 const quotesLength = quotes.length;
 
-function Book(name, author, pages, read) {
+function Book(title, author, pages, read) {
   // the constructor...
-  this.name = name;
+  this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
 }
 
-function addBookToLibrary(name, author, pages, read) {
-  // do stuff here
-  myLibrary.push(new Book(name, author, pages, read));
+function addBookToLibrary(title, author, pages, read) {
+  const userBook = new Book(title, author, pages, read)
+  myLibrary.push(userBook);
+  return userBook;
 }
 
 
@@ -50,37 +52,56 @@ function randomIndex () {
   return randomNumber
 }
 
-function printBooks () {
-  for (let i = 0; i < myLibrary.length; i++) {
-    const card = document.createElement("div");
-    document.body.appendChild(card);
-    card.setAttribute("id", "card");
-    // Fix Append and Class //
-  }
+function printBooks (book) {
+    const div = document.createElement("div");
+    let bookInfo = [
+      book.title,
+      book.author,
+      book.pages,
+      book.read
+    ]
+    grid.appendChild(div);
+    for (let i = 0; i < 4; i++) {
+      const description = document.createElement("p");
+      description.textContent = "Title: " + bookInfo[i];
+      div.appendChild(description);
+    }
+    div.className = "card";
+    
+  
 }
+
 
 quoteText.innerHTML = '"' + quotes[randomIndex()] + '"';
 
 addBook.addEventListener("click", function () {
-
-  if (openTab.style.display === "none") {
+  var computedStyle = window.getComputedStyle(openTab);
+  
+  if (computedStyle.display === "none") {
     openTab.style.display = "flex";
     openTab.style.position = "absolute";
     openTab.style.top = "35%";
     openTab.style.left = "40%";
-  }
+    }
 
-  else {
-    openTab.style.display = "none";
-  }
+    else {
+      openTab.style.display = "none";
+    }
+  
 })
 
 submit.addEventListener("click", function (e) {
   e.preventDefault();
   openTab.style.display = "none";
-  addBookToLibrary(title.value, author.value, pages.value, pages.value);
-  printBooks();
+  if (title.value && author.value && pages.value && read.value) {
+    printBooks(addBookToLibrary(title.value, author.value, pages.value, read.value)) ;
+  }
 });
 
 
 
+
+
+// Button remove book //
+// Button change read status // 
+// Fix Radio Value, How to get the value correctle // 
