@@ -28,6 +28,7 @@ const author = document.getElementById("author");
 const pages = document.getElementById("pages");
 const read = document.getElementById("read");
 const submit = document.getElementById("submit");
+const grid = document.getElementById("grid");
 const quotesLength = quotes.length;
 
 function Book(name, author, pages, read) {
@@ -47,6 +48,15 @@ function addBookToLibrary(name, author, pages, read) {
 function randomIndex () {
   const randomNumber = Math.floor(Math.random() * quotesLength);
   return randomNumber
+}
+
+function printBooks () {
+  for (let i = 0; i < myLibrary.length; i++) {
+    const card = document.createElement("div");
+    document.body.appendChild(card);
+    card.setAttribute("id", "card");
+    // Fix Append and Class //
+  }
 }
 
 quoteText.innerHTML = '"' + quotes[randomIndex()] + '"';
@@ -69,7 +79,8 @@ submit.addEventListener("click", function (e) {
   e.preventDefault();
   openTab.style.display = "none";
   addBookToLibrary(title.value, author.value, pages.value, pages.value);
-  console.log(myLibrary[0]);
+  printBooks();
 });
+
 
 
