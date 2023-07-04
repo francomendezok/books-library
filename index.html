@@ -25,7 +25,34 @@
             <button id="add-book">Add Book +</button>
         </div>
         <div id="open-tab">
-            <form action="" method="post"></form>
+            <form id="form" method="post">
+                <h2>Add Book Information</h2>
+                <section class="input">
+                    <label for="title">Title</label>
+                    <input type="text" name="Title" id="title">
+                </section>
+                <section class="input">
+                    <label for="author">Author</label>
+                    <input type="text" name="Author" id="author">
+                </section>
+                <section class="input">
+                    <label for="pages">Pages</label>
+                    <input type="text" name="Pages" id="pages">
+                </section>
+                <section class="input">
+                    <p>I read this book</p>
+                    <div class="radio">
+                        <input type="radio" name="Read" id="read" value="Yes">
+                        <label for="read">Yes</label>
+                        <input type="radio" name="Read" id="read" value="No">
+                        <label for="read">No</label>
+                    </div>
+                </section>
+                <input id="submit" type="submit" value="Add Book">
+            </form>
+        </div>
+        <div class="grid">
+            
         </div>
 
     </main>

@@ -23,15 +23,26 @@ const quoteText = document.getElementById("quote");
 const naval =document.getElementById("naval");
 const addBook = document.getElementById("add-book");
 const openTab = document.getElementById("open-tab");
+const title = document.getElementById("title");
+const author = document.getElementById("author");
+const pages = document.getElementById("pages");
+const read = document.getElementById("read");
+const submit = document.getElementById("submit");
 const quotesLength = quotes.length;
 
-function Book() {
+function Book(name, author, pages, read) {
   // the constructor...
+  this.name = name;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
 }
 
-function addBookToLibrary() {
+function addBookToLibrary(name, author, pages, read) {
   // do stuff here
+  myLibrary.push(new Book(name, author, pages, read));
 }
+
 
 function randomIndex () {
   const randomNumber = Math.floor(Math.random() * quotesLength);
@@ -41,9 +52,24 @@ function randomIndex () {
 quoteText.innerHTML = '"' + quotes[randomIndex()] + '"';
 
 addBook.addEventListener("click", function () {
-  openTab.style.display = "flex";
-  openTab.style.alignSelf = "center";
+
+  if (openTab.style.display === "none") {
+    openTab.style.display = "flex";
+    openTab.style.position = "absolute";
+    openTab.style.top = "35%";
+    openTab.style.left = "40%";
+  }
+
+  else {
+    openTab.style.display = "none";
+  }
 })
 
+submit.addEventListener("click", function (e) {
+  e.preventDefault();
+  openTab.style.display = "none";
+  addBookToLibrary(title.value, author.value, pages.value, pages.value);
+  console.log(myLibrary[0]);
+});
 
 
