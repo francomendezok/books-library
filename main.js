@@ -55,18 +55,14 @@ function randomIndex () {
 
 function printBooks (book) {
     const div = document.createElement("div");
-    let bookInfo = [
-      book.Title,
-      book.Author,
-      book.Pages,
-      book.Status
-    ]
+    const bookEntries = Object.entries(book);
 
-    const bookKeys = Object.keys(book);
     grid.appendChild(div);
+
     for (let i = 0; i < 4; i++) {
+        const [key, value] = bookEntries[i];
         const description = document.createElement("p");
-        description.textContent = bookKeys[i] + ": " + bookInfo[i];
+        description.textContent = key + ": " + value;
         description.className = "card-text";
         div.appendChild(description); 
     }
@@ -86,6 +82,14 @@ function printBooks (book) {
 
     div.className = "card";
     buttonsContainer.className = "buttons-container";
+
+    readButton.addEventListener("click", function () {
+      console.log("Click");
+    })
+
+    deleteButton.addEventListener("click", function () {
+      console.log(myLibrary.pop())
+    })
 }
 
 
@@ -116,7 +120,8 @@ submit.addEventListener("click", function (e) {
   e.preventDefault();
   openTab.style.display = "none";
   if (title.value && author.value && pages.value && read.value) {
-    printBooks(addBookToLibrary(title.value, author.value, pages.value, read.value)) ;
+    addBookToLibrary(title.value, author.value, pages.value, read.value) ;
+    printBooks(myLibrary[myLibrary.length - 1]);
   }
 });
 
@@ -126,4 +131,7 @@ submit.addEventListener("click", function (e) {
 
 // Event Listener Button remove book //
 // Event Listener Button change read status // 
+
 // Add Regex Inputs //
+
+// Optional: Add Option to add Book Cover // 
