@@ -26,22 +26,23 @@ const openTab = document.getElementById("open-tab");
 const title = document.getElementById("title");
 const author = document.getElementById("author");
 const pages = document.getElementById("pages");
-const read = document.getElementById("read");
-// Need to select all the radio read inputs (2), not just one. If not, the value will always be "Yes" //
+const read = document.querySelectorAll("#read");
 const submit = document.getElementById("submit");
 const grid = document.getElementById("grid");
 const quotesLength = quotes.length;
 
-function Book(title, author, pages, read) {
+
+
+function Book(title, author, pages, status) {
   // the constructor...
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+  this.Title = title;
+  this.Author = author;
+  this.Pages = pages;
+  this.Status = status;
 }
 
-function addBookToLibrary(title, author, pages, read) {
-  const userBook = new Book(title, author, pages, read)
+function addBookToLibrary(title, author, pages, status) {
+  const userBook = new Book(title, author, pages, status)
   myLibrary.push(userBook);
   return userBook;
 }
@@ -55,24 +56,48 @@ function randomIndex () {
 function printBooks (book) {
     const div = document.createElement("div");
     let bookInfo = [
-      book.title,
-      book.author,
-      book.pages,
-      book.read
+      book.Title,
+      book.Author,
+      book.Pages,
+      book.Status
     ]
+
+    const bookKeys = Object.keys(book);
     grid.appendChild(div);
     for (let i = 0; i < 4; i++) {
-      const description = document.createElement("p");
-      description.textContent = "Title: " + bookInfo[i];
-      div.appendChild(description);
+        const description = document.createElement("p");
+        description.textContent = bookKeys[i] + ": " + bookInfo[i];
+        description.className = "card-text";
+        div.appendChild(description); 
     }
-    div.className = "card";
+
+    const readButton = document.createElement("button");
+    const deleteButton = document.createElement("button");
+    const buttonsContainer = document.createElement("div");
     
-  
+    div.appendChild(buttonsContainer);
+    buttonsContainer.appendChild(readButton);
+    buttonsContainer.appendChild(deleteButton);
+    
+    readButton.className = "button-card read";
+    deleteButton.className ="button-card remove";
+    readButton.textContent = "Read Status";
+    deleteButton.textContent = "Remove Book";
+
+    div.className = "card";
+    buttonsContainer.className = "buttons-container";
 }
 
 
 quoteText.innerHTML = '"' + quotes[randomIndex()] + '"';
+
+
+// Event Listeners //
+read.forEach(radio => {
+  radio.addEventListener("change", function() {
+    if (this.checked) read.value = this.value;
+  });
+});
 
 addBook.addEventListener("click", function () {
   var computedStyle = window.getComputedStyle(openTab);
@@ -84,10 +109,7 @@ addBook.addEventListener("click", function () {
     openTab.style.left = "40%";
     }
 
-    else {
-      openTab.style.display = "none";
-    }
-  
+    else openTab.style.display = "none";
 })
 
 submit.addEventListener("click", function (e) {
@@ -102,6 +124,6 @@ submit.addEventListener("click", function (e) {
 
 
 
-// Button remove book //
-// Button change read status // 
-// Fix Radio Value, How to get the value correctle // 
+// Event Listener Button remove book //
+// Event Listener Button change read status // 
+// Add Regex Inputs //

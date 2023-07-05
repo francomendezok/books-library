@@ -8,6 +8,7 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+
 header {
     display: flex;
     background-color: #164e63;
@@ -49,7 +50,7 @@ header p {
 }
 
 main {
-    background-color: #fdba74;
+    background-color: #d4a16b;
     grid-row: 2 / 3;
 }
 
@@ -75,7 +76,36 @@ main {
     color: white;
     font-size: 200%;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+}
 
+.card-text {
+    font-size: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    text-align: left;
+}
+
+.button-card {
+    width: 30%;
+    height: 100%;
+    border-radius: 12px;
+    border: none;
+    font-size: 80%;
+}
+
+.read:hover {
+    background-color: #a2d87e;
+    color: black;
+}
+
+.remove:hover {
+    background-color: #ed7d63;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-evenly;
+    height: 10%;
 }
 
 .quote-and-button {
