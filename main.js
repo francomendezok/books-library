@@ -19,6 +19,7 @@ let quotes = [
     "Reading a book isn't a race - the better the book, the slower it should be absorbed."
 ]
 
+
 const quoteText = document.getElementById("quote");
 const naval =document.getElementById("naval");
 const addBook = document.getElementById("add-book");
@@ -82,6 +83,7 @@ function printBooks (book) {
 
     div.className = "card";
     buttonsContainer.className = "buttons-container";
+
 
     readButton.addEventListener("click", function () {
       console.log("Click");
