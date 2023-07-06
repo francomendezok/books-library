@@ -54,11 +54,15 @@ function randomIndex () {
   return randomNumber
 }
 
-function printBooks (book) {
+function printBooks () {
+  grid.innerHTML = "";
+  for (let j = 0; j < myLibrary.length; j++) {
     const div = document.createElement("div");
-    const bookEntries = Object.entries(book);
-
+    const bookEntries = Object.entries(myLibrary[j]);
     grid.appendChild(div);
+    div.dataset.bookIndex = j; 
+    console.log(div.dataset.bookIndex);
+
 
     for (let i = 0; i < 4; i++) {
         const [key, value] = bookEntries[i];
@@ -66,32 +70,32 @@ function printBooks (book) {
         description.textContent = key + ": " + value;
         description.className = "card-text";
         div.appendChild(description); 
-    }
-
-    const readButton = document.createElement("button");
-    const deleteButton = document.createElement("button");
-    const buttonsContainer = document.createElement("div");
+      }
+      
+      const readButton = document.createElement("button");
+      const deleteButton = document.createElement("button");
+      const buttonsContainer = document.createElement("div");
+      div.appendChild(buttonsContainer);
+      buttonsContainer.appendChild(readButton);
+      buttonsContainer.appendChild(deleteButton);
+      
+      readButton.className = "button-card read";
+      deleteButton.className ="button-card remove";
+      readButton.textContent = "Read Status";
+      deleteButton.textContent = "Remove Book";
     
-    div.appendChild(buttonsContainer);
-    buttonsContainer.appendChild(readButton);
-    buttonsContainer.appendChild(deleteButton);
-    
-    readButton.className = "button-card read";
-    deleteButton.className ="button-card remove";
-    readButton.textContent = "Read Status";
-    deleteButton.textContent = "Remove Book";
-
-    div.className = "card";
-    buttonsContainer.className = "buttons-container";
+      div.className = "card";
+      buttonsContainer.className = "buttons-container";
+      deleteButton.addEventListener("click", function (event) {
+        
+          const bookIndex = event.target.dataset.bookIndex;
+          printBooks(myLibrary.splice(bookIndex, 1));
+      });
+      
+  }
 
 
-    readButton.addEventListener("click", function () {
-      console.log("Click");
-    })
-
-    deleteButton.addEventListener("click", function () {
-      console.log(myLibrary.pop())
-    })
+  
 }
 
 
@@ -123,7 +127,7 @@ submit.addEventListener("click", function (e) {
   openTab.style.display = "none";
   if (title.value && author.value && pages.value && read.value) {
     addBookToLibrary(title.value, author.value, pages.value, read.value) ;
-    printBooks(myLibrary[myLibrary.length - 1]);
+    printBooks();
   }
 });
 
@@ -131,7 +135,7 @@ submit.addEventListener("click", function (e) {
 
 
 
-// Event Listener Button remove book //
+// Event Listener Button remove book. Splice is not working the correct way. I can use an object and delete the element //
 // Event Listener Button change read status // 
 
 // Add Regex Inputs //
