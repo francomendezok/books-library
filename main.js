@@ -19,6 +19,8 @@ let quotes = [
     "Reading a book isn't a race - the better the book, the slower it should be absorbed."
 ]
 
+let myIndex = [];
+
 
 const quoteText = document.getElementById("quote");
 const naval =document.getElementById("naval");
@@ -31,6 +33,7 @@ const read = document.querySelectorAll("#read");
 const submit = document.getElementById("submit");
 const grid = document.getElementById("grid");
 const quotesLength = quotes.length;
+var clickedEdit;
 
 
 
@@ -61,36 +64,58 @@ function printBooks () {
     const bookEntries = Object.entries(myLibrary[j]);
     grid.appendChild(div);
     div.dataset.bookIndex = j; 
-    console.log(div.dataset.bookIndex);
-
-
-    for (let i = 0; i < 4; i++) {
-        const [key, value] = bookEntries[i];
-        const description = document.createElement("p");
-        description.textContent = key + ": " + value;
-        description.className = "card-text";
-        div.appendChild(description); 
-      }
-      
-      const readButton = document.createElement("button");
-      const deleteButton = document.createElement("button");
-      const buttonsContainer = document.createElement("div");
-      div.appendChild(buttonsContainer);
-      buttonsContainer.appendChild(readButton);
-      buttonsContainer.appendChild(deleteButton);
-      
-      readButton.className = "button-card read";
-      deleteButton.className ="button-card remove";
-      readButton.textContent = "Read Status";
-      deleteButton.textContent = "Remove Book";
     
-      div.className = "card";
+    
+    for (let i = 0; i < 4; i++) {
+      const [key, value] = bookEntries[i];
+      const description = document.createElement("p");
+      description.textContent = key + ": " + value;
+      description.className = "card-text";
+      div.appendChild(description); 
+    }
+    
+    const editInfo = document.createElement("button");
+    const deleteButton = document.createElement("button");
+    const buttonsContainer = document.createElement("div");
+    div.appendChild(buttonsContainer);
+    buttonsContainer.appendChild(editInfo);
+    buttonsContainer.appendChild(deleteButton);
+    
+    editInfo.className = "button-card read";
+    deleteButton.className ="button-card remove";
+    editInfo.textContent = "Edit Info";
+    deleteButton.textContent = "Remove Book";
+    
+    div.className = "card";
       buttonsContainer.className = "buttons-container";
-      deleteButton.addEventListener("click", function (event) {
-        
-          const bookIndex = event.target.dataset.bookIndex;
-          printBooks(myLibrary.splice(bookIndex, 1));
+      
+      deleteButton.addEventListener("click", function () {
+        const index = buttonsContainer.parentNode.dataset.bookIndex;
+        myLibrary.splice(index, 1)
+        printBooks(); 
       });
+      
+      editInfo.addEventListener("click", function () {
+        const index = buttonsContainer.parentNode.dataset.bookIndex;
+        var computedStyle = window.getComputedStyle(openTab);
+        const h2 = openTab.querySelector("h2");
+        
+        if (computedStyle.display === "none") {
+          clickedEdit = true;
+          h2.textContent = "Edit Info";
+          h2.style.fontSize = "150%";
+          openTab.style.display = "flex";
+          openTab.style.position = "absolute";
+          openTab.style.top = "35%";
+          openTab.style.left = "40%";
+          myIndex.push(index);
+        }
+      
+          else {
+            openTab.style.display = "none"; 
+            clickedEdit = false;
+          }
+      })
       
   }
 
@@ -102,6 +127,7 @@ function printBooks () {
 quoteText.innerHTML = '"' + quotes[randomIndex()] + '"';
 
 
+
 // Event Listeners //
 read.forEach(radio => {
   radio.addEventListener("change", function() {
@@ -111,7 +137,7 @@ read.forEach(radio => {
 
 addBook.addEventListener("click", function () {
   var computedStyle = window.getComputedStyle(openTab);
-  
+  clickedEdit = false;
   if (computedStyle.display === "none") {
     openTab.style.display = "flex";
     openTab.style.position = "absolute";
@@ -125,9 +151,21 @@ addBook.addEventListener("click", function () {
 submit.addEventListener("click", function (e) {
   e.preventDefault();
   openTab.style.display = "none";
-  if (title.value && author.value && pages.value && read.value) {
-    addBookToLibrary(title.value, author.value, pages.value, read.value) ;
+  
+  if (clickedEdit) {
+    let useIndex = myIndex[myIndex.length -1];
+    myLibrary[useIndex].Title = title.value;
+    myLibrary[useIndex].Author = author.value;
+    myLibrary[useIndex].Pages = pages.value;
+    myLibrary[useIndex].Status = read.value;
     printBooks();
+    clickedEdit = false;
+    return;
+  }
+
+  else if (title.value && author.value && pages.value && read.value) {
+    addBookToLibrary(title.value, author.value, pages.value, read.value) ;
+    printBooks(myLibrary);
   }
 });
 
@@ -135,9 +173,8 @@ submit.addEventListener("click", function (e) {
 
 
 
-// Event Listener Button remove book. Splice is not working the correct way. I can use an object and delete the element //
-// Event Listener Button change read status // 
 
 // Add Regex Inputs //
+// Text and Buttons Style when too much cards // 
 
 // Optional: Add Option to add Book Cover // 
