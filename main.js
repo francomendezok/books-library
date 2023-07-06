@@ -176,5 +176,4 @@ submit.addEventListener("click", function (e) {
 
 // Add Regex Inputs //
 // Text and Buttons Style when too much cards // 
-
 // Optional: Add Option to add Book Cover // 
