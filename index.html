@@ -29,15 +29,15 @@
                 <h2>Add Book Information</h2>
                 <section class="input">
                     <label for="title">Title</label>
-                    <input type="text" name="Title"  id="title">
+                    <input type="text" name="Title" minlength="3" maxlength="30"  id="title">
                 </section>
                 <section class="input">
                     <label for="author">Author</label>
-                    <input type="text" name="Author"  id="author">
+                    <input type="text" name="Author" minlength="3" maxlength="30" id="author">
                 </section>
                 <section class="input">
                     <label for="pages">Pages</label>
-                    <input type="number" name="Pages" id="pages">
+                    <input type="text" name="pages" minlength="1" maxlength="5" oninvalid="setCustomValidity('Por favor, completa este campo')"  id="pages" pattern="^[0-9]+$" required>
                 </section>
                 <section class="input">
                     <p>Book Status</p>
@@ -48,13 +48,13 @@
                         <label for="read">Finished</label>
                     </div>
                 </section>
+
                 <input id="submit" type="submit" value="Add Book">
             </form>
         </div>
         <div id="grid">
 
         </div>
-
     </main>
     <footer>
             <p id="follow-p">Franco Mendez - The Odin Project</p>

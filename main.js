@@ -150,6 +150,12 @@ addBook.addEventListener("click", function () {
 
 submit.addEventListener("click", function (e) {
   e.preventDefault();
+  
+  if (!/^\d+$/.test(pages.value)) {
+    alert("Pages Section: Please type just Numbers");
+    return;
+  }
+  
   openTab.style.display = "none";
   
   if (clickedEdit) {
@@ -174,6 +180,5 @@ submit.addEventListener("click", function (e) {
 
 
 
-// Add Regex Inputs //
-// Text and Buttons Style when too much cards // 
+// CSS Text and Buttons Style when too much cards // 
 // Optional: Add Option to add Book Cover // 
