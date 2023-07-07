@@ -37,12 +37,13 @@ var clickedEdit;
 
 
 
-function Book(title, author, pages, status) {
+function Book(title, author, pages, status, cover) {
   // the constructor...
   this.Title = title;
   this.Author = author;
   this.Pages = pages;
   this.Status = status;
+  this.Cover = cover;
 }
 
 function addBookToLibrary(title, author, pages, status) {
