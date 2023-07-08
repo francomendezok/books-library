@@ -32,7 +32,13 @@ const pages = document.getElementById("pages");
 const read = document.querySelectorAll("#read");
 const submit = document.getElementById("submit");
 const grid = document.getElementById("grid");
+const selectCover = document.getElementById("cover");
+const uploadCover = document.getElementById("upload");
+const form = document.getElementById("form");
+const cards = document.querySelectorAll(".card");
 const quotesLength = quotes.length;
+let imageData = [];
+let selectCoverChanged = false;
 var clickedEdit;
 
 
@@ -46,8 +52,8 @@ function Book(title, author, pages, status, cover) {
   this.Cover = cover;
 }
 
-function addBookToLibrary(title, author, pages, status) {
-  const userBook = new Book(title, author, pages, status)
+function addBookToLibrary(title, author, pages, status, cover) {
+  const userBook = new Book(title, author, pages, status, cover)
   myLibrary.push(userBook);
   return userBook;
 }
@@ -58,13 +64,27 @@ function randomIndex () {
   return randomNumber
 }
 
+function clearText () {
+  form.reset();
+}
+
 function printBooks () {
   grid.innerHTML = "";
   for (let j = 0; j < myLibrary.length; j++) {
     const div = document.createElement("div");
+    const infoDiv = document.createElement("div");
+    const divText = document.createElement("div");
+    const divImg = document.createElement("div");
+
     const bookEntries = Object.entries(myLibrary[j]);
     grid.appendChild(div);
-    div.dataset.bookIndex = j; 
+    div.appendChild(infoDiv);
+    infoDiv.appendChild(divText);
+    infoDiv.appendChild(divImg);
+    infoDiv.className = "info-div";
+    divText.className = "div-text";
+    divImg.className = "div-img";
+    div.dataset.bookIndex = j;
     
     
     for (let i = 0; i < 4; i++) {
@@ -72,13 +92,18 @@ function printBooks () {
       const description = document.createElement("p");
       description.textContent = key + ": " + value;
       description.className = "card-text";
-      div.appendChild(description); 
+      divText.appendChild(description); 
     }
     
     const editInfo = document.createElement("button");
     const deleteButton = document.createElement("button");
     const buttonsContainer = document.createElement("div");
+    const cover = document.createElement("img");
+    cover.className = "card-images";
+
+    divImg.appendChild(cover);
     div.appendChild(buttonsContainer);
+
     buttonsContainer.appendChild(editInfo);
     buttonsContainer.appendChild(deleteButton);
     
@@ -95,6 +120,15 @@ function printBooks () {
         myLibrary.splice(index, 1)
         printBooks(); 
       });
+
+        if (selectCoverChanged && imageData.length) {
+          console.log(imageData);
+          imageData[1].onload = function(e) {
+            cover.src = e.target.result;
+          };
+        
+          imageData[1].readAsDataURL(imageData[0]);
+        }
       
       editInfo.addEventListener("click", function () {
         const index = buttonsContainer.parentNode.dataset.bookIndex;
@@ -151,8 +185,13 @@ addBook.addEventListener("click", function () {
 
 submit.addEventListener("click", function (e) {
   e.preventDefault();
+
+  if (!title.value || !author.value || !pages.value || !read.value){
+    alert("Please complete all boxes with information") 
+    return;
+}
   
-  if (!/^\d+$/.test(pages.value)) {
+  else if (!/^\d+$/.test(pages.value)) {
     alert("Pages Section: Please type just Numbers");
     return;
   }
@@ -171,15 +210,29 @@ submit.addEventListener("click", function (e) {
   }
 
   else if (title.value && author.value && pages.value && read.value) {
-    addBookToLibrary(title.value, author.value, pages.value, read.value) ;
+    addBookToLibrary(title.value, author.value, pages.value, read.value, selectCover.value) ;
+    clearText();
     printBooks(myLibrary);
   }
+});
+
+uploadCover.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  if (title.value && author.value && pages.value && read.value) {
+    selectCover.click();
+  }
+})
+
+selectCover.addEventListener('change', function (event) {
+  selectCoverChanged = true;
+  var file = event.target.files[0];
+  var reader = new FileReader();
+  imageData.push(file);
+  imageData.push(reader);
 });
 
 
 
 
-
-
 // CSS Text and Buttons Style when too much cards // 
-// Optional: Add Option to add Book Cover // 
